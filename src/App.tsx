@@ -338,9 +338,12 @@ function App() {
               <div className="space-y-1">
                 <p className="text-sm text-gray-500">Average Debt</p>
                 <p className="text-2xl font-bold text-gray-900">
-                  {people.length > 0 
-                    ? (people.reduce((sum, p) => sum + (p.totalDebt || 0), 0) / people.length).toLocaleString('vi-VN')
-                    : '0'}₫
+                  {(() => {
+                    const peopleWithDebt = people.filter(p => p.totalDebt > 0);
+                    return peopleWithDebt.length > 0 
+                      ? Math.round(peopleWithDebt.reduce((sum, p) => sum + p.totalDebt, 0) / peopleWithDebt.length).toLocaleString('vi-VN')
+                      : '0';
+                  })()}₫
                 </p>
               </div>
               <div className="space-y-1">
